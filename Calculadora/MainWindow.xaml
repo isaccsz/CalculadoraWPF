@@ -32,7 +32,7 @@
                     </Grid.RowDefinitions>
 
                     <!--Display-->
-                    <TextBox Name="tbDisplay" Style="{StaticResource Display}"/>
+                    <TextBox Name="tbDisplay" Style="{StaticResource Display}" Focusable="False"/>
 
                     <!--Digitos numéricos da calculadora-->
                     <UniformGrid Grid.Row="1" Grid.RowSpan="4" Columns="3" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -80,8 +80,8 @@
                     <Button Style="{StaticResource DigitsBtnStyle}" Content="." Background="#D9D9D9" Click="Button_Click"/>
 
                     <Button Style="{StaticResource DigitsBtnStyle}" Content="Calc" FontSize="20" Background="#4CAF50" Click="Button_Click"/>
-
-                    <Button Name="exitBtn" Style="{StaticResource DigitsBtnStyle}" Content="Sair" FontSize="20" Background="#FF7F7F" Click="Button_Click"/>
+                    <Button Name="exitBtn" Style="{StaticResource DigitsBtnStyle}" Content="Sair" FontSize="20" Background="#FF0000" Click="Button_Click"/>
+                    <Button Style="{StaticResource DigitsBtnStyle}" Content="Limp" FontSize="20" Background="#FF7F7F" Click="Button_Click"/>
 
                 </UniformGrid>
 

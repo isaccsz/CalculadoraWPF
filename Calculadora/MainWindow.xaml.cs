@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Security;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -57,7 +56,7 @@ namespace Calculadora
             return !(lastChar == '.' && operadores.Contains(simbol) ||
                      (lastChar == '.' && simbol == "Calc") ||
                      (new[] { '-', '+', 'X', ' ', '÷', 'ⁿ' }.Contains(lastChar) && (simbol == "Calc" || lastChar == 'ⁿ')) ||
-                     (lastChar == ' ' && simbol == "-"));
+                     (lastChar == ' ' && simbol == "-") || (lastChar == ' ' && simbol == "√"));
         }
 
         public void DigitarNoDisplay(string content)
@@ -72,16 +71,18 @@ namespace Calculadora
                 case "÷":
                 case "Xⁿ":
                 case "MOD":
-                    firstNumber = double.Parse(tbDisplay.Text, CultureInfo.InvariantCulture);
-                    operando = content;
-                    tbDisplay.Text += $" {content} ";
-                    nextNumberIndex = tbDisplay.Text.Length - 1;
+                    createFirstNumber(content);
                     break;
 
                 case "Calc":
-                    secondNumber = double.Parse(tbDisplay.Text.Substring(nextNumberIndex).Replace(" ", ""), CultureInfo.InvariantCulture);
-                    ChooseOperand();
-                    tbDisplay.Text = result.ToString("F2", CultureInfo.InvariantCulture);
+                    
+                    if(nextNumberIndex < tbDisplay.Text.Length)
+                    {
+                        
+                        secondNumber = double.Parse(tbDisplay.Text.Substring(nextNumberIndex).Replace(" ", ""), CultureInfo.InvariantCulture);
+                        ChooseOperand();
+                        showResult();
+                    }
                     break;
 
                 case "Sair":
@@ -89,14 +90,16 @@ namespace Calculadora
                     break;
 
                 case "DEL":
-                    tbDisplay.Text = tbDisplay.Text.Length > 0 ? tbDisplay.Text.Substring(0, tbDisplay.Text.Length - 1) : "";
+                    del();
                     break;
 
                 case "C":
-                    tbDisplay.Text = "";
-                    firstNumber = 0;
-                    secondNumber = 0;
-                    operando = "";
+                    Erase();
+                    break;
+
+                case "√":
+                    sqrt();
+                    showResult();
                     break;
 
                 default:
@@ -107,7 +110,7 @@ namespace Calculadora
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-
+            e.Handled = true;
             string digito = ExtractDigitFromKey(e.Key);
 
             if (!string.IsNullOrEmpty(digito))
@@ -179,6 +182,19 @@ namespace Calculadora
             }
         }
 
+        private void createFirstNumber(string content)
+        {
+            
+            string input = tbDisplay.Text;
+            if (double.TryParse(input, NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out double parsedNumber))
+            {
+                firstNumber = parsedNumber;
+                operando = content;
+                tbDisplay.Text += $" {content} ";
+                nextNumberIndex = tbDisplay.Text.Length - 1;
+            }
+        }
+
         private void Add()
         {
             result = firstNumber + secondNumber;
@@ -209,9 +225,37 @@ namespace Calculadora
             result = firstNumber % secondNumber;
         }
 
+        private void sqrt()
+        {
+            string input = tbDisplay.Text.Trim();
+            if (double.TryParse(input, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out double parsedNumber))
+            {
+                result = Math.Sqrt(parsedNumber);
+            }
+            else
+            {
+                tbDisplay.Text = "";
+                MessageBox.Show("Entrada invalida");
+            }
+        }
+
         private void Erase()
         {
+            tbDisplay.Text = "";
+            firstNumber = 0;
+            secondNumber = 0;
+            operando = "";
+            nextNumberIndex = 0;
+        }
 
+        private void del()
+        {
+            tbDisplay.Text = tbDisplay.Text.Length > 0 ? tbDisplay.Text.Substring(0, tbDisplay.Text.Length - 1) : "";
+        }
+
+        private void showResult()
+        {
+            tbDisplay.Text = result.ToString("F2", CultureInfo.InvariantCulture).Trim();
         }
 
         private void ChooseOperand()
