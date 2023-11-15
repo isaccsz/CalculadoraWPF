@@ -9,9 +9,19 @@ using System.Windows.Input;
 namespace Calculadora
 {
 
+    public class CalculatorState
+    {
+        public string DisplayText { get; set; }
+        public double FirstNumber { get; set; }
+        public double SecondNumber { get; set; }
+        public string Operator { get; set; }
+        public int NextNumberIndex { get; set; }
+        public double Result { get; set; }
+    }
+
     public partial class MainWindow : Window
     {
-        Stack<char> userActions = new Stack<char>();
+        Stack<CalculatorState> userActions = new Stack<CalculatorState>();
         private double firstNumber { get; set; }
         private double secondNumber { get; set; }
         private string operando { get; set; }
@@ -103,6 +113,13 @@ namespace Calculadora
                 case "Abs":
                     abs();
                     break;
+                case "Desfazer":
+                    Undo();
+                    break;
+                case "Limp":
+                    limp();
+                    MessageBox.Show("Dados limpos com sucesso!", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
+                    break;
 
                 default:
                     tbDisplay.Text += content;
@@ -174,12 +191,18 @@ namespace Calculadora
                     return "Abs";
                 case Key.Back:
                     return "DEL";
+                case Key.Z:
+                    return "Desfazer";
+                case Key.R:
+                    return "√";
                 case Key.Enter:
                     return "Calc";
                 case Key.Escape:
                     return "Sair";
                 case Key.Space:
                     return string.Empty;
+                case Key.L:
+                    return "Limp";
 
                 default:
                     return string.Empty;
@@ -273,7 +296,40 @@ namespace Calculadora
 
         private void showResult()
         {
+            CalculatorState currentState = new CalculatorState
+            {
+                DisplayText = tbDisplay.Text.Trim(),
+                FirstNumber = firstNumber,
+                SecondNumber = secondNumber,
+                Operator = operando,
+                Result = result,
+                NextNumberIndex = nextNumberIndex
+                
+            };
+
+            userActions.Push(currentState);
+
             tbDisplay.Text = result.ToString("F2", CultureInfo.InvariantCulture).Trim();
+        }
+
+        private void Undo()
+        {
+            if (userActions.Count > 0)
+            {
+                CalculatorState previousState = userActions.Pop();
+
+                tbDisplay.Text = previousState.DisplayText;
+                firstNumber = previousState.FirstNumber;
+                secondNumber = previousState.SecondNumber;
+                operando = previousState.Operator;
+                result = previousState.Result;
+                nextNumberIndex = previousState.NextNumberIndex;
+            }
+        }
+
+        private void limp()
+        {
+            userActions = new Stack<CalculatorState>();
         }
 
         private void ChooseOperand()
