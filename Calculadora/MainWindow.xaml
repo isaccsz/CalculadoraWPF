@@ -64,7 +64,7 @@
 
                 <UniformGrid Grid.Row="1" Grid.RowSpan="4" Columns="3" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Button Style="{StaticResource DigitsBtnStyle}" Content="DEL" Background="#D9D9D9" FontSize="18" Click="Button_Click"/>
-                    <Button Style="{StaticResource DigitsBtnStyle}" Content="C" Background="#D9D9D9" FontSize="25"/>
+                    <Button Style="{StaticResource DigitsBtnStyle}" Content="C" Background="#D9D9D9" FontSize="25" Click="Button_Click"/>
                     <Button Style="{StaticResource DigitsBtnStyle}" Content="Desfazer" Background="#D9D9D9" FontSize="18"/>
 
                     <Button Style="{StaticResource DigitsBtnStyle}" Content="+" Background="#D9D9D9" Click="Button_Click"/>

@@ -17,7 +17,7 @@ namespace Calculadora
         private double secondNumber { get; set; }
         private string operando { get; set; }
         private int nextNumberIndex { get; set; }
-        string[] operadores = { "+", "-", "/", "X", "÷", "Xⁿ" , ".", "√" };
+        string[] operadores = { "+", "-", "/", "X", "÷", "Xⁿ" , ".", "√", "MOD"};
         public double result;
         public MainWindow()
         {
@@ -46,6 +46,10 @@ namespace Calculadora
                     tbDisplay.Text += "-";
                     return false;
                 }
+                else if(string.IsNullOrEmpty(tbDisplay.Text) && operadores.Contains(simbol))
+                {
+                    return false;
+                }
                 return true;
             }
 
@@ -67,6 +71,7 @@ namespace Calculadora
                 case "X":
                 case "÷":
                 case "Xⁿ":
+                case "MOD":
                     firstNumber = double.Parse(tbDisplay.Text, CultureInfo.InvariantCulture);
                     operando = content;
                     tbDisplay.Text += $" {content} ";
@@ -85,6 +90,13 @@ namespace Calculadora
 
                 case "DEL":
                     tbDisplay.Text = tbDisplay.Text.Length > 0 ? tbDisplay.Text.Substring(0, tbDisplay.Text.Length - 1) : "";
+                    break;
+
+                case "C":
+                    tbDisplay.Text = "";
+                    firstNumber = 0;
+                    secondNumber = 0;
+                    operando = "";
                     break;
 
                 default:
@@ -149,12 +161,18 @@ namespace Calculadora
                     return "Xⁿ";
                 case Key.OemPeriod:
                     return ".";
+                case Key.M:
+                    return "MOD";
+                case Key.C:
+                    return "C";
                 case Key.Back:
                     return "DEL";
                 case Key.Enter:
                     return "Calc";
                 case Key.Escape:
                     return "Sair";
+                case Key.Space:
+                    return string.Empty;
 
                 default:
                     return string.Empty;
@@ -186,6 +204,16 @@ namespace Calculadora
             result = Math.Pow(firstNumber, secondNumber);
         }
 
+        private void Mod()
+        {
+            result = firstNumber % secondNumber;
+        }
+
+        private void Erase()
+        {
+
+        }
+
         private void ChooseOperand()
         {
 
@@ -205,6 +233,9 @@ namespace Calculadora
                     break;
                 case "Xⁿ":
                     Pow();
+                    break;
+                case "MOD":
+                    Mod();
                     break;
 
             }
