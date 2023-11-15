@@ -75,7 +75,7 @@
                     <Button Style="{StaticResource DigitsBtnStyle}" Content="MOD" Background="#D9D9D9" Click="Button_Click"/>
                     <Button Style="{StaticResource DigitsBtnStyle}" Content="√" Background="#D9D9D9" Click="Button_Click"/>
 
-                    <Button Style="{StaticResource DigitsBtnStyle}" Content="Abs" Background="#D9D9D9"/>
+                    <Button Style="{StaticResource DigitsBtnStyle}" Content="Abs" Background="#D9D9D9" Click="Button_Click"/>
                     <Button Style="{StaticResource DigitsBtnStyle}" Content="Xⁿ" Background="#D9D9D9" Click="Button_Click"/>
                     <Button Style="{StaticResource DigitsBtnStyle}" Content="." Background="#D9D9D9" Click="Button_Click"/>
 

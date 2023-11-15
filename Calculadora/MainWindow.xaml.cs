@@ -99,7 +99,9 @@ namespace Calculadora
 
                 case "√":
                     sqrt();
-                    showResult();
+                    break;
+                case "Abs":
+                    abs();
                     break;
 
                 default:
@@ -168,6 +170,8 @@ namespace Calculadora
                     return "MOD";
                 case Key.C:
                     return "C";
+                case Key.A:
+                    return "Abs";
                 case Key.Back:
                     return "DEL";
                 case Key.Enter:
@@ -230,7 +234,21 @@ namespace Calculadora
             string input = tbDisplay.Text.Trim();
             if (double.TryParse(input, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out double parsedNumber))
             {
-                result = Math.Sqrt(parsedNumber);
+                result = Math.Sqrt(parsedNumber); showResult();
+            }
+            else
+            {
+                tbDisplay.Text = "";
+                MessageBox.Show("Entrada invalida");
+            }
+        }
+
+        private void abs()
+        {
+            string input = tbDisplay.Text.Trim();
+            if (double.TryParse(input, NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out double parsedNumber))
+            {
+                result = Math.Abs(parsedNumber); showResult();
             }
             else
             {
@@ -280,6 +298,9 @@ namespace Calculadora
                     break;
                 case "MOD":
                     Mod();
+                    break;
+                case "Abs":
+                    abs();
                     break;
 
             }
