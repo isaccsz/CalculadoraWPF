@@ -221,7 +221,7 @@ namespace Calculadora
             {
                 firstNumber = parsedNumber;
                 operando = content;
-                tbDisplay.Text += $" {content} ";
+                tbDisplay.Text += operando == "Xⁿ" ? " ^ " : $" {content} ";
                 nextNumberIndex = tbDisplay.Text.Length - 1;
             }
         }
@@ -295,7 +295,13 @@ namespace Calculadora
 
         private void del()
         {
-            tbDisplay.Text = tbDisplay.Text.Length > 0 ? tbDisplay.Text.Substring(0, tbDisplay.Text.Length - 1) : "";
+            if(!string.IsNullOrEmpty(tbDisplay.Text))
+            {
+                string newString = tbDisplay.Text;
+                newString = newString.Substring(0, newString.Length - 1);
+                tbDisplay.Text = newString;
+            }
+            
         }
 
         private void showResult()
