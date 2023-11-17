@@ -16,12 +16,12 @@ em desfazer, o estado anterior é desempilhado, e os dados são restaurados.
 
 A calculadora conta com algumas teclas atalho para as operações, são elas:
 
-*A:* Abs
-*R:* Raiz
-*P:* Potência
-*Z:* Desfazer
-*M:* Mod
-*Esc:* Sair
+**A:** Abs
+**R:** Raiz
+**P:** Potência
+**Z:** Desfazer
+**M:** Mod
+**Esc:** Sair
 
 ## Preview da aplicação
 
