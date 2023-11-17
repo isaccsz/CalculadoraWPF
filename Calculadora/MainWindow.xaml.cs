@@ -63,10 +63,14 @@ namespace Calculadora
             }
 
             char lastChar = tbDisplay.Text.Last();
+            if(lastChar == ' ' && simbol == "-")
+            {
+                tbDisplay.Text += "-";
+            }
             return !(lastChar == '.' && operadores.Contains(simbol) ||
                      (lastChar == '.' && simbol == "Calc") ||
                      (new[] { '-', '+', 'X', ' ', '÷', 'ⁿ' }.Contains(lastChar) && (simbol == "Calc" || lastChar == 'ⁿ')) ||
-                     (lastChar == ' ' && simbol == "-") || (lastChar == ' ' && simbol == "√"));
+                     (lastChar == ' ' && simbol == "√") || (tbDisplay.Text.Contains('.') && simbol == "."));
         }
 
         public void DigitarNoDisplay(string content)
