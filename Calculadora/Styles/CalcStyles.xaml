@@ -33,7 +33,7 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="TextAlignment" Value="Center" />
         <Setter Property="FontSize" Value="20" />
-        <Setter Property="FontFamily" Value="Consolas" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="#FFFFFF" />
 
         <Setter Property="Template">
@@ -41,7 +41,7 @@
                 <ControlTemplate TargetType="{x:Type TextBox}">
                     <Border x:Name="tbBorder" CornerRadius="10" Background="#2B2B2B">
                         <Border.Effect>
-                            <DropShadowEffect Color="Black" Direction="270" ShadowDepth="3" Opacity="0.7"/>
+                            <DropShadowEffect Color="#FFFFFF" Direction="270" ShadowDepth="5" Opacity="0.7" BlurRadius="0"/>
                         </Border.Effect>
                         <ScrollViewer x:Name="PART_ContentHost" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
