@@ -309,7 +309,18 @@ namespace Calculadora
 
             userActions.Push(currentState);
 
-            tbDisplay.Text = result.ToString("F2", CultureInfo.InvariantCulture).Trim();
+            if (result == Math.Floor(result))
+            {
+
+                int numero = (int)result;
+                tbDisplay.Text = numero.ToString();
+            }
+            else
+            {
+                tbDisplay.Text = result.ToString(CultureInfo.InvariantCulture).Trim();
+            }
+
+            
         }
 
         private void Undo()
