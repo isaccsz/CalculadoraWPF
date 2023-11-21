@@ -28,9 +28,37 @@ namespace Calculadora
         private int nextNumberIndex { get; set; }
         string[] operadores = { "+", "-", "/", "X", "÷", "Xⁿ" , ".", "√", "MOD"};
         public double result;
+        private bool isDragging = false;
+        private Point startPoint;
         public MainWindow()
         {
             InitializeComponent();
+            this.MouseLeftButtonDown += MainWindow_MouseLeftButtonDown;
+            this.MouseLeftButtonUp += MainWindow_MouseLeftButtonUp;
+            this.MouseMove += MainWindow_MouseMove;
+        }
+        private void MainWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            isDragging = true;
+            startPoint = e.GetPosition(this);
+        }
+
+        private void MainWindow_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            isDragging = false;
+        }
+
+        private void MainWindow_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                Point mousePosition = e.GetPosition(this);
+                double offsetX = mousePosition.X - startPoint.X;
+                double offsetY = mousePosition.Y - startPoint.Y;
+
+                this.Left += offsetX;
+                this.Top += offsetY;
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -100,7 +128,11 @@ namespace Calculadora
                     break;
 
                 case "Sair":
-                    Application.Current.Shutdown();
+                    MessageBoxResult resultado = MessageBox.Show("Deseja sair?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (resultado == MessageBoxResult.Yes)
+                    {
+                        Application.Current.Shutdown();
+                    }
                     break;
 
                 case "DEL":
